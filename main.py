@@ -6,14 +6,11 @@ from bs4 import BeautifulSoup
 
 # ***************************   Variables and Definitions    *************************** #
 #  Log-in Data
-# USERNAME = "UserName"
-# PASSWORD = "P4$$w02D"
-USERNAME = "RustyHoff"
-PASSWORD = "X5z*OmBtO!eu"
-
+USERNAME = "UserName"
+PASSWORD = "P4$$w02D"
 
 #  Folder to download courses to. Relative to this file
-download_path = r"../"
+download_path = r"CG_Cookie/"
 
 # Logging info
 logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s -%(levelname)s - %(message)s')
