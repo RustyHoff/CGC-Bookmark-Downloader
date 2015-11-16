@@ -6,11 +6,14 @@ from bs4 import BeautifulSoup
 
 # ***************************   Variables and Definitions    *************************** #
 #  Log-in Data
-USERNAME = "UserName"
-PASSWORD = "P4$$w02D"
+# USERNAME = "UserName"
+# PASSWORD = "P4$$w02D"
+USERNAME = "RustyHoff"
+PASSWORD = "X5z*OmBtO!eu"
+
 
 #  Folder to download courses to. Relative to this file
-download_path = r"C:/Videos/CG_Cookie_Courses/"
+download_path = r"../"
 
 # Logging info
 logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s -%(levelname)s - %(message)s')
@@ -50,9 +53,12 @@ def get_course_files(max_pages=None):
     zip_number = 0
 
     while len(bookmark_href) > 0 and bookmark_number <= max_pages:
+        lesson_number = 1
         url = bookmark_href.pop(0)
         title = bookmark_title.pop(0)
         title = title[:-1]  # Must remove extra spaces
+        title = title.replace(":", "")
+        title = title.replace("–", "-")
         print("\nNavigating to bookmark " + title)
         source_code = r.get(url + "#files")
         plain_text = source_code.text
@@ -69,9 +75,9 @@ def get_course_files(max_pages=None):
         for link in soup.findAll("a", {"data-post-type": "cgc_lessons"}):
             zip_file = link.get("href")
             file_name = link.get("data-title")
-            file_name = file_name.replace(":", "-")
+            file_name = file_name.replace(":", "")
             file_name = file_name.replace("–", "-")
-            file_name += ".zip"
+            file_name = str(lesson_number).zfill(3) + " " + file_name + ".zip"
             # print(file_name)
             # print(zip_file)
             if os.path.isfile(path + "/" + file_name):
@@ -82,6 +88,7 @@ def get_course_files(max_pages=None):
                 with open(path + "/" + file_name, "wb") as file_output:
                     file_output.write(download_file.content)
                     zip_number += 1
+            lesson_number += 1
         bookmark_number += 1
     print("Zip files downloaded: " + str(zip_number))
 
@@ -115,6 +122,6 @@ with requests.session() as r:
 # ***************************   Other Functions    *************************** #
 
     find_bookmarks()
-    get_course_files()  # Blank gets all course files. Put number for number of courses to download, starting from Top Left
+    get_course_files(2)  # Blank gets all course files. Put number for number of courses to download, starting from Top Left
 
 
