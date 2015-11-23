@@ -79,7 +79,7 @@ def get_course_files(max_pages=None):
             file_name = file_name.replace("–", "-")
             file_name = str(lesson_number).zfill(3) + " " + file_name
             if file_name.endswith(".zip"):
-                return
+                pass
             else:
                 file_name += ".zip"
             # print(file_name)
