@@ -13,7 +13,7 @@ USERNAME = "UserName"
 PASSWORD = "P4$$w02D"
 
 #  Folder to download courses to. Relative to this file
-download_path = r"CG_Cookie/"
+download_path = r"../CG_Cookie/"
 
 # Logging info
 logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s -%(levelname)s - %(message)s')
@@ -72,12 +72,16 @@ def get_course_files(max_pages=None):
         except FileExistsError:
             pass
 
-        for link in soup.findAll("a", {"data-post-type": "cgc_lessons"}):
+        for link in soup.findAll("a", {"data-post-type": "cgc_lessons"}) or soup.findAll("a", {"data-post-type": "cgc_archive"}):
             zip_file = link.get("href")
             file_name = link.get("data-title")
             file_name = file_name.replace(":", "")
             file_name = file_name.replace("–", "-")
-            file_name = str(lesson_number).zfill(3) + " " + file_name + ".zip"
+            file_name = str(lesson_number).zfill(3) + " " + file_name
+            if file_name.endswith(".zip"):
+                pass
+            else:
+                file_name += ".zip"
             # print(file_name)
             # print(zip_file)
             if os.path.isfile(path + "/" + file_name):
