@@ -1,6 +1,6 @@
 ## Features I'd like to add.
 
--  [ ] Add functionality for cgcookie.com/archive.
+-  [x] Add functionality for cgcookie.com/archive.
 -  [ ] Have progress indicator.
 -  [ ] Download .url for each course for easy referance back online.
 -  [ ] Option to input just course url.
