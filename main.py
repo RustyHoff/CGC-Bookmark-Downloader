@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# coding=utf-8
+
 import logging
 import os
 
@@ -120,5 +123,3 @@ with requests.session() as r:
 
     find_bookmarks()
     get_course_files()  # Blank gets all course files. Put number for number of courses to download, starting from Top Left
-
-
