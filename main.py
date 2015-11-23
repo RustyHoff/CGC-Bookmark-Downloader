@@ -9,8 +9,8 @@ from bs4 import BeautifulSoup
 
 # ***************************   Variables and Definitions    *************************** #
 #  Log-in Data
-USERNAME = "Zippy"
-PASSWORD = "Zippyb0t"
+USERNAME = "UserName"
+PASSWORD = "P4$$w02D"
 
 #  Folder to download courses to. Relative to this file
 download_path = r"../CG_Cookie/"
