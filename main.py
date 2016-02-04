@@ -8,9 +8,14 @@ import requests
 from bs4 import BeautifulSoup
 
 # ***************************   Variables and Definitions    *************************** #
+login_credentials = r"user-pass.txt"
+
+with open(login_credentials, "r") as f:
+    user_file = f.readlines()
+
 #  Log-in Data
-USERNAME = "UserName"
-PASSWORD = "P4$$w02D"
+USERNAME = user_file[0]
+PASSWORD = user_file[1]
 
 #  Folder to download courses to. Relative to this file
 download_path = r"../CG_Cookie/"
@@ -106,7 +111,7 @@ with requests.session() as r:
     login_url = "https://cgcookie.com/wp-login.php"
     r.get(login_url)
     login_data = dict(log=USERNAME, pwd=PASSWORD)
-    print("Logging in user " + USERNAME + "...")
+    print("Logging in user " + USERNAME)
     r.post(login_url, data=login_data)
     page = r.get("https://cgcookie.com/login/")
     # print(page.text) #  Shows HTML
