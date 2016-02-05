@@ -101,11 +101,14 @@ def get_course_files(max_pages=None):
                     else:
                         h = requests.head(zip_file)
                         file_size = int(float(h.headers["Content-Length"]) / 1024)
-                        pbar = tqdm(download_file.iter_content(1024), unit="KB", leave=True, total=file_size)
+                        pbar = tqdm(download_file.iter_content(1024),
+                                    unit="KB",
+                                    leave=True,
+                                    total=file_size,
+                                    dynamic_ncols=True)
+                        print("\nDownloading " + str(file_name))
                         for block in pbar:
                             file_output.write(block)
-                            pbar.set_description("Downloading " + str(file_name))
-                    # file_output.write(download_file.content)
                         zip_number += 1
             lesson_number += 1
         bookmark_number += 1
@@ -141,4 +144,4 @@ with requests.session() as r:
 # ***************************   Other Functions    *************************** #
 
     find_bookmarks()
-    get_course_files(1)  # Blank gets all course files. Put number for number of courses to download, starting from Top Left
+    get_course_files(4)  # Blank gets all course files. Put number for number of courses to download, starting from Top Left
