@@ -6,6 +6,7 @@ import os
 
 import requests
 from bs4 import BeautifulSoup
+from tqdm import tqdm
 
 # ***************************   Variables and Definitions    *************************** #
 login_credentials = r"user-pass.txt"
@@ -92,11 +93,20 @@ def get_course_files(max_pages=None):
             if os.path.isfile(path + "/" + file_name):
                 print("File " + file_name + " already exists...\n" + "Moving to next file.\n")
             else:
-                print("Downloading " + str(file_name) + " ...")
-                download_file = requests.get(zip_file)
+                # print("Downloading " + str(file_name) + " ...")
                 with open(path + "/" + file_name, "wb") as file_output:
-                    file_output.write(download_file.content)
-                    zip_number += 1
+                    download_file = requests.get(zip_file, stream =True)
+                    if not download_file.ok:
+                        print("Could not download file: " + str(file_name))
+                    else:
+                        h = requests.head(zip_file)
+                        file_size = int(float(h.headers["Content-Length"]) / 1024)
+                        pbar = tqdm(download_file.iter_content(1024), unit="KB", leave=True, total=file_size)
+                        for block in pbar:
+                            file_output.write(block)
+                            pbar.set_description("Downloading " + str(file_name))
+                    # file_output.write(download_file.content)
+                        zip_number += 1
             lesson_number += 1
         bookmark_number += 1
     print("Zip files downloaded: " + str(zip_number))
@@ -131,4 +141,4 @@ with requests.session() as r:
 # ***************************   Other Functions    *************************** #
 
     find_bookmarks()
-    get_course_files()  # Blank gets all course files. Put number for number of courses to download, starting from Top Left
+    get_course_files(1)  # Blank gets all course files. Put number for number of courses to download, starting from Top Left
