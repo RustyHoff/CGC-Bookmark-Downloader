@@ -103,12 +103,12 @@ def get_course_files(max_pages=None):
                         file_size = int(float(h.headers["Content-Length"]) / 1024)
                         pbar = tqdm(download_file.iter_content(1024),
                                     unit="KB",
-                                    leave=True,
                                     total=file_size,
                                     dynamic_ncols=True)
                         print("\nDownloading " + str(file_name))
                         for block in pbar:
                             file_output.write(block)
+                        print("\n" + str(file_name) + " downloaded.")
                         zip_number += 1
             lesson_number += 1
         bookmark_number += 1
